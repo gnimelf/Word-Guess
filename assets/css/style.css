@@ -26,14 +26,14 @@ main{
     color: var(--page-font-color);
 }
 
-#high-score{
+#score{
     position: absolute;
     margin: 20px 0 0 20px;
     width: 250px;    
     z-index: 2;
 }
 
-#high-score p{
+#score p{
     border: 2px solid var(--page-accent-color);
     background-color: var(--page-accent-color);
     color: var(--page-font-color);
