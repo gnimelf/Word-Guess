@@ -91,7 +91,6 @@ function getRandomWord(){
     }
     console.log(blankWord);
     guessWordEl.text(blankWord);
-    
 }
 
 // TODO: When user presses button check if letter is in word and update screen
@@ -105,18 +104,11 @@ function updateScreen(event){
             correctGuesses[i] = userGuess;
         }
     }
-    
-    
-
     for (var i=0; i<correctGuesses.length; i++){
         console.log(correctGuesses[i])
         blankWord += correctGuesses[i];
         guessWordEl.text(blankWord);
     }
-    
-    
-
- 
 }
 
 // Set copyright year in footer
