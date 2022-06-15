@@ -1,4 +1,7 @@
-
+*{
+    font-family: 'Permanent Marker', cursive;
+    letter-spacing: 0.3rem;
+}
 :root{
     --page-bg-color: #171717;
     --page-font-color: #EDEDED;
@@ -26,7 +29,7 @@ main{
 #high-score{
     position: absolute;
     margin: 20px 0 0 20px;
-    width: 200px;    
+    width: 250px;    
     z-index: 2;
 }
 
@@ -61,6 +64,7 @@ main{
     border-radius: 25px;
     padding: 10px;
     margin-top: 5%;
+
     cursor: pointer;
 }
 
@@ -69,10 +73,9 @@ main{
     background-color: var(--page-font-color);
 }
 
-#game-image img{
-    margin-top: 20px;
-    /* width: 300px;
-    height: 200px; */
+#game-image {
+    margin: 20px 0;
+    width: 20%;
 }
 
 #timer{
