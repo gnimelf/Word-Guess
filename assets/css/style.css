@@ -1,0 +1,96 @@
+
+:root{
+    --page-bg-color: #171717;
+    --page-font-color: #EDEDED;
+    --page-btn-color: #DA0037;
+    --page-accent-color: #444444;
+     
+}
+
+body{
+    position: relative;
+    background-color: var(--page-bg-color);
+}
+
+main{
+    display: flex;
+}
+
+#header{
+    padding: 15px;
+    text-align: center;
+    background-color: var(--page-accent-color);
+    color: var(--page-font-color);
+}
+
+#high-score{
+    position: absolute;
+    margin: 20px 0 0 20px;
+    width: 200px;    
+    z-index: 2;
+}
+
+#high-score p{
+    border: 2px solid var(--page-accent-color);
+    background-color: var(--page-accent-color);
+    color: var(--page-font-color);
+    border-radius: 25px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+#game-board{
+    align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#guess-word{
+    margin-top: 5%;
+    text-align:center;
+    color: var(--page-font-color);
+}
+
+#start-btn{
+    background-color: var(--page-btn-color);
+    border: 0px solid var(--page-btn-color);
+    color: var(--page-font-color);
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 10px;
+    margin-top: 5%;
+    cursor: pointer;
+}
+
+#start-btn:hover{
+    color:var(--page-btn-color);
+    background-color: var(--page-font-color);
+}
+
+#game-image img{
+    margin-top: 20px;
+    width: 300px;
+    height: 200px;
+}
+
+#timer{
+    position: absolute;
+    color: var(--page-font-color);
+    top: 0;
+    right: 0;
+    text-align: right;
+    margin: 15px 50px 15px 0;
+}
+
+#footer{
+    position: absolute;
+    height: 55px;
+    width: 100%;
+    padding-top: 15px;
+    text-align: center;
+    bottom: 0;
+    background-color: var(--page-accent-color);
+    color: var(--page-font-color);
+}
