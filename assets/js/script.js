@@ -1,10 +1,16 @@
+// Selectors
 var timerEl = $("#timer");
 var highScoreEl = $("#high-score");
 var currentScore = $("#current-score");
-var guessWord = $("#guess-word");
-var startBtn = $("#start-btn");
+var guessWordEl = $("#guess-word");
+var startBtnEl = $("#start-btn");
 var gameImageEl = $("#game-image");
-var workBank = [
+var footerCopy = $("#footer p");
+
+var year = new Date();
+
+// 
+var wordBank = [
     "Algorithm", 
     "Argument", 
     "Arrays",
@@ -41,12 +47,18 @@ var workBank = [
     "Variable types",
     "While loops"
 ];
-var blankWord = [];
+var blankWord = "";
+var wordToGuess = "";
 var count = 10;
+var imageNumber = 1;
+var correctGuesses = [];
 
 function startGame(event){
-    // Select random word
+
+    getRandomWord();
     
+
+    updateImage();
 
     // Timer
     var timeInterval = setInterval(()=>{
@@ -54,13 +66,65 @@ function startGame(event){
         // Check if counter hit zero
         if (count === 0) {
             clearInterval(timeInterval);
+            // TODO:  gameOver();
         }
 
         timerEl.text(`Timer: ${count--}`);
 
     },1000);
-
-    gameImageEl.attr("src", )
 }
 
-startBtn.on("click", startGame);
+function updateImage(){
+   gameImageEl.attr("src", `./assets/images/image-${imageNumber}.png`) 
+}
+
+// Setup new word for game
+function getRandomWord(){
+    var randomNum = Math.floor(Math.random()*wordBank.length)
+    wordToGuess = wordBank[randomNum];
+    console.log(wordToGuess);
+
+    // setup blank word
+    for (var i=0; i<wordToGuess.length; i++){
+        blankWord += " _ ";
+        correctGuesses.push(" _ ");
+    }
+    console.log(blankWord);
+    guessWordEl.text(blankWord);
+    
+}
+
+// TODO: When user presses button check if letter is in word and update screen
+function updateScreen(event){
+    var userGuess = (event.originalEvent.key);
+    blankWord = '';
+    // Loop through correct word
+    for(var i=0; i<wordToGuess.length; i++){
+        // if match
+        if (userGuess === wordToGuess[i]){
+            correctGuesses[i] = userGuess;
+        }
+    }
+    
+    
+
+    for (var i=0; i<correctGuesses.length; i++){
+        console.log(correctGuesses[i])
+        blankWord += correctGuesses[i];
+        guessWordEl.text(blankWord);
+    }
+    
+    
+
+ 
+}
+
+// Set copyright year in footer
+function setCopyRight(){
+    footerCopy.text(`\u00A9 Justin Fleming ${year.getFullYear()}`)
+}
+
+setCopyRight();
+
+startBtnEl.on("click", startGame);
+$(document).on("keyup",updateScreen);
