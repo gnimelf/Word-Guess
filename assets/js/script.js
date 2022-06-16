@@ -20,7 +20,6 @@ var wordBank = [
     "autonomous",
     "binary numbers",
     "bit",
-    "c++",
     "camel case",
     "coding",
     "coding languages",
@@ -63,8 +62,10 @@ var timeInterval = '';
 
 
 function startGame(event) {
-    $(document).on("keyup", checkGuess);
-    
+    $(document).on("keydown", checkGuess);
+
+    startBtnEl.addClass("hide");
+    imageNumber = 1;
 
     getRandomWord();
 
@@ -116,45 +117,49 @@ function getRandomWord() {
 
 // TODO: When user presses button check if letter is in word and update screen
 function checkGuess(event) {
-    var userGuess = (event.originalEvent.key);
-    var userGuessCorrect = false;
-
-    // Reset blankWord var
-    blankWord = '';
-
-    // Loop through correct word(s)
-    for (var i = 0; i < wordToGuess.length; i++) {
-        // if match
-        if (userGuess === wordToGuess[i]) {
-            correctGuesses[i] = userGuess;
-            userGuessCorrect = true;
-            currentScore += 1;
-            currentScoreEl.text(`Current Score: ${currentScore}`)
-        }
-    }
-
-    // check if user got it correct
-    if (userGuessCorrect === true) {
-        for (var i = 0; i < correctGuesses.length; i++) {
-            if (correctGuesses[i] === " "){
-                blankWord += ' &nbsp; ';
-            } else {
-                blankWord += correctGuesses[i];
-                guessWordEl.html(blankWord);
+    var buttonPressed = event.originalEvent.key;
+    if (buttonPressed.charCodeAt(0) > 96 && buttonPressed.charCodeAt(0) < 123 ) {
+        var userGuess = (event.originalEvent.key);
+        var userGuessCorrect = false;
+    
+        // Reset blankWord var
+        blankWord = '';
+    
+        // Loop through correct word(s)
+        for (var i = 0; i < wordToGuess.length; i++) {
+            // if match
+            if (userGuess === wordToGuess[i]) {
+                correctGuesses[i] = userGuess;
+                userGuessCorrect = true;
+                currentScore += 1;
+                currentScoreEl.text(`Current Score: ${currentScore}`)
             }
-
         }
+    
+        // check if user got it correct
+        if (userGuessCorrect === true) {
+            for (var i = 0; i < correctGuesses.length; i++) {
+                if (correctGuesses[i] === " "){
+                    blankWord += ' &nbsp; ';
+                } else {
+                    blankWord += correctGuesses[i];
+                    guessWordEl.html(blankWord);
+                }
+    
+            }
+    
+        } else {
+            // update image if user guess is wrong
+            imageNumber += 1;
+            updateImage();
+        }
+        if (blankWord === mysteryWord) {
+            currentScore += count;
+            currentScoreEl.text(`Current Score: ${currentScore}`);
+            gameOver();
+        }
+    }
 
-    } else {
-        // update image if user guess is wrong
-        imageNumber += 1;
-        updateImage();
-    }
-    if (blankWord === mysteryWord) {
-        currentScore += count;
-        currentScoreEl.text(`Current Score: ${currentScore}`);
-        gameOver();
-    }
 }
 
 // Set copyright year in footer
@@ -170,6 +175,7 @@ function gameOver() {
         localStorage.setItem("wg_highscore", highScore);
     } else {
         guessWordEl.html(wordToGuess)
+        $(document).off("keydown", checkGuess);
     }
     var playAgain = confirm("Game Over! Would you like to play again?");
     if (playAgain === true){
@@ -182,6 +188,17 @@ function gameOver() {
 
 // reset game board
 function resetgame() {
+    blankWord = "";
+    wordToGuess = "";
+    count = 20;
+    imageNumber = 7;
+    correctGuesses = [];
+    currentScore = 0;
+    startBtnEl.removeClass("hide");
+    guessWordEl.html("H e _ _ o &nbsp; W o r _ d");
+    currentScoreEl.text("Current Score: 0");
+    timerEl.text("Timer: ");
+    gameImageEl.attr("src", `./assets/images/image-${imageNumber}.png`)
 
 }
 
