@@ -11,41 +11,41 @@ var year = new Date();
 
 // 
 var wordBank = [
-    "Algorithm", 
-    "Argument", 
-    "Arrays",
-    "Arithmetic operators",
-    "Assignment operators",
-    "Augmented reality",
-    "Autonomous",
-    "Binary numbers",
-    "Bit",
-    "C++",
-    "Camel case",
-    "Coding",
-    "Coding languages",
-    "Computer program",
-    "Conditional statements",
-    "Else statements",
-    "For loops",
-    "Functions",
-    "If statements",
-    "Integrated Development Environment",
-    "IntelliJ",
-    "Java",
-    "Jupyter Notebook",
-    "Linux",
-    "Loops",
-    "Main function",
-    "Machine learning",
-    "Neural networks",
-    "Python",
-    "Scratch",
-    "Scripts",
-    "Statement",
-    "Variable",
-    "Variable types",
-    "While loops"
+    "algorithm",
+    "argument",
+    "arrays",
+    "arithmetic operators",
+    "assignment operators",
+    "augmented reality",
+    "autonomous",
+    "binary numbers",
+    "bit",
+    "c++",
+    "camel case",
+    "coding",
+    "coding languages",
+    "computer program",
+    "conditional statements",
+    "else statements",
+    "for loops",
+    "functions",
+    "if statements",
+    "integrated development environment",
+    "intellij",
+    "java",
+    "jupyter notebook",
+    "linux",
+    "loops",
+    "main function",
+    "machine learning",
+    "neural networks",
+    "python",
+    "scratch",
+    "scripts",
+    "statement",
+    "variable",
+    "variable types",
+    "while loops"
 ];
 var blankWord = "";
 var wordToGuess = "";
@@ -53,15 +53,15 @@ var count = 10;
 var imageNumber = 1;
 var correctGuesses = [];
 
-function startGame(event){
+function startGame(event) {
 
     getRandomWord();
-    
+
 
     updateImage();
 
     // Timer
-    var timeInterval = setInterval(()=>{
+    var timeInterval = setInterval(() => {
 
         // Check if counter hit zero
         if (count === 0) {
@@ -71,52 +71,73 @@ function startGame(event){
 
         timerEl.text(`Timer: ${count--}`);
 
-    },1000);
+    }, 1000);
 }
 
-function updateImage(){
-   gameImageEl.attr("src", `./assets/images/image-${imageNumber}.png`) 
+function updateImage() {
+    if (imageNumber < 8){
+        gameImageEl.attr("src", `./assets/images/image-${imageNumber}.png`); 
+    }
 }
 
 // Setup new word for game
-function getRandomWord(){
-    var randomNum = Math.floor(Math.random()*wordBank.length)
+function getRandomWord() {
+    var randomNum = Math.floor(Math.random() * wordBank.length)
     wordToGuess = wordBank[randomNum];
     console.log(wordToGuess);
 
     // setup blank word
-    for (var i=0; i<wordToGuess.length; i++){
-        blankWord += " _ ";
-        correctGuesses.push(" _ ");
+    for (var i = 0; i < wordToGuess.length; i++) {
+        if (wordToGuess[i] != ' '){
+            blankWord += " _ ";
+            correctGuesses.push(" _ ");
+        } else {
+            console.log( );
+            blankWord += ' &nbsp; ';
+            correctGuesses.push(' &nbsp; ');
+        }
     }
     console.log(blankWord);
-    guessWordEl.text(blankWord);
+    guessWordEl.html(blankWord);
 }
 
 // TODO: When user presses button check if letter is in word and update screen
-function updateScreen(event){
+function updateScreen(event) {
     var userGuess = (event.originalEvent.key);
+    var userGuessCorrect = false;
+
+    // Reset blankWord var
     blankWord = '';
-    // Loop through correct word
-    for(var i=0; i<wordToGuess.length; i++){
+
+    // Loop through correct word(s)
+    for (var i = 0; i < wordToGuess.length; i++) {
         // if match
-        if (userGuess === wordToGuess[i]){
+        if (userGuess === wordToGuess[i]) {
             correctGuesses[i] = userGuess;
+            userGuessCorrect = true;
         }
     }
-    for (var i=0; i<correctGuesses.length; i++){
-        console.log(correctGuesses[i])
-        blankWord += correctGuesses[i];
-        guessWordEl.text(blankWord);
+
+    // check if user got it correct
+    if (userGuessCorrect === true) {
+        for (var i = 0; i < correctGuesses.length; i++) {
+            console.log(correctGuesses[i])
+            blankWord += correctGuesses[i];
+            guessWordEl.html(blankWord);
+        }
+    } else {
+        // update image if user guess is wrong
+        imageNumber += 1;
+        updateImage();
     }
 }
 
 // Set copyright year in footer
-function setCopyRight(){
+function setCopyRight() {
     footerCopy.text(`\u00A9 Justin Fleming ${year.getFullYear()}`)
 }
 
 setCopyRight();
 
 startBtnEl.on("click", startGame);
-$(document).on("keyup",updateScreen);
+$(document).on("keyup", updateScreen);
