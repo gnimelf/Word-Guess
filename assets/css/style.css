@@ -19,6 +19,10 @@ main{
     display: flex;
 }
 
+.hide {
+    display: none;
+}
+
 #header{
     padding: 15px;
     text-align: center;
