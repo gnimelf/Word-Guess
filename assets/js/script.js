@@ -131,7 +131,7 @@ function checkGuess(event) {
             if (userGuess === wordToGuess[i]) {
                 correctGuesses[i] = userGuess;
                 userGuessCorrect = true;
-                currentScore += 1;
+                currentScore += 2;
                 currentScoreEl.text(`Current Score: ${currentScore}`)
             }
         }
@@ -145,7 +145,6 @@ function checkGuess(event) {
                     blankWord += correctGuesses[i];
                     guessWordEl.html(blankWord);
                 }
-    
             }
     
         } else {
@@ -153,13 +152,13 @@ function checkGuess(event) {
             imageNumber += 1;
             updateImage();
         }
+        
         if (blankWord === mysteryWord) {
             currentScore += count;
             currentScoreEl.text(`Current Score: ${currentScore}`);
             gameOver();
         }
     }
-
 }
 
 // Set copyright year in footer
@@ -197,9 +196,9 @@ function resetgame() {
     startBtnEl.removeClass("hide");
     guessWordEl.html("H e _ _ o &nbsp; W o r _ d");
     currentScoreEl.text("Current Score: 0");
+    highScoreEl.text(`High Score: ${highScore}`);
     timerEl.text("Timer: ");
     gameImageEl.attr("src", `./assets/images/image-${imageNumber}.png`)
-
 }
 
 function loadHighScore() {
